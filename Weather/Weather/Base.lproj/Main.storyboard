@@ -63,6 +63,7 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="goButton" destination="IAL-ix-fHD" id="C7k-IQ-Ar0"/>
                         <outlet property="locationField" destination="2r7-de-HFd" id="ApG-F7-Ucf"/>
                     </connections>
                 </viewController>
