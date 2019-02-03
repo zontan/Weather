@@ -33,7 +33,7 @@ class APIWrapper {
     
     private init() {}
     
-    func getForecast(for location: CLLocation, callback: @escaping (Any?, APIError?) -> Void) {
+    func getForecast(for location: CLLocation, callback: @escaping (Weather?, APIError?) -> Void) {
         let endpoint = "forecast"
         let lat = location.coordinate.latitude
         let lon = location.coordinate.longitude
@@ -47,8 +47,12 @@ class APIWrapper {
                     return
                 }
                 do {
-                    let jsonObject = try JSONSerialization.jsonObject(with: data, options: [])
-                    callback(jsonObject, nil)
+                    if let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
+                        let weather = Weather(weatherDict: jsonObject)
+                        callback(weather, nil)
+                    } else {
+                        callback(nil, APIError.jsonParseError)
+                    }
                 } catch {
                     //Invalid JSON response - nothing we can do
                     callback(nil, APIError.jsonParseError)

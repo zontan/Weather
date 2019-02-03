@@ -13,12 +13,18 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var locationField: UITextField!
     @IBOutlet weak var goButton: UIButton!
+    @IBOutlet weak var workingView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        goButton.isEnabled = true
+        workingView.isHidden = true
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -30,11 +36,14 @@ class ViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         
         goButton.isEnabled = true
+        workingView.isHidden = true
         show(alert, sender: nil)
     }
 
     @IBAction func didPressGo(_ sender: Any) {
         goButton.isEnabled = false //Disable the button while we're working
+        //TODO: Animate in somehow
+        workingView.isHidden = false
         if let locationString = locationField.text, locationString != "" {
             getCoordinates(location: locationString) { (location) in
                 APIWrapper.sharedInstance.getForecast(for: location) { (data, error) in
@@ -47,8 +56,10 @@ class ViewController: UIViewController {
                         case .serverError:
                             self.showError(message: "Could not reach weather forecast server. Please try again later.")
                         }
-                    } else if let data = data {
-                        //TODO: Parse the data, show results
+                    } else if let weather = data {
+                        DispatchQueue.main.async {
+                            self.performSegue(withIdentifier: "ShowWeather", sender: weather)
+                        }
                     }
                 }
             }
@@ -68,6 +79,15 @@ class ViewController: UIViewController {
                 return
             }
             callback(location)
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ShowWeather" {
+            if let weatherController = segue.destination as? WeatherViewController, let weather = sender as? Weather {
+                weatherController.weather = weather
+                weatherController.location = locationField.text
+            }
         }
     }
     
