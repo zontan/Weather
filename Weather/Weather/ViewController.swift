@@ -75,7 +75,7 @@ class ViewController: UIViewController {
         geocoder.geocodeAddressString(location) { (placemarks, error) in
             let placemark = placemarks?.first
             guard let location = placemark?.location else {
-                self.showError(message: "Could not understand your location. Make sure everything is spelled correctly.")
+                self.showError(message: "Could not determine your location. Make sure everything is spelled correctly and that you have internet access.")
                 
                 return
             }
