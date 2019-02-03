@@ -7,6 +7,7 @@
 //
 
 import XCTest
+import CoreLocation
 @testable import Weather
 
 class WeatherTests: XCTestCase {
@@ -21,16 +22,28 @@ class WeatherTests: XCTestCase {
         super.tearDown()
     }
     
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-    
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+    func testGetWeather() {
+        let controllerUnderTest = ViewController()
+        
+        let expectation = XCTestExpectation(description: "Get location data")
+        let weatherExpectation = XCTestExpectation(description: "Get Weather object")
+        controllerUnderTest.getCoordinates(location: "San Jose, California") { (location) in
+            expectation.fulfill() //This callback only happens if location gathering was successful
+            
+            APIWrapper.sharedInstance.getForecast(for: location, callback: { (weather, error) in
+                
+                XCTAssertNil(error)
+                XCTAssertNotNil(weather)
+                XCTAssertNotNil(weather?.getWeatherCondition())
+                XCTAssertNotNil(weather?.getPrecipitationChance())
+                XCTAssertNotNil(weather?.getPressure())
+                XCTAssertNotNil(weather?.getTemperature())
+                XCTAssertNotNil(weather?.getHumidity())
+                weatherExpectation.fulfill()
+            })
         }
+        
+        wait(for: [expectation, weatherExpectation], timeout: 15.0)
     }
     
 }

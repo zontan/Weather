@@ -20,8 +20,6 @@ class APIWrapper {
     //If this were a full app I wouldn't check in the API key like this to a public repo, but if this were a full app I wouldn't be using a public repo.
     private let APIKey = "e0cea2af294b25e13e92019908ffc6eb"
     
-    //https://api.darksky.net/forecast/e0cea2af294b25e13e92019908ffc6eb/37.8267,-122.4233
-    
     private func constructURLRequest(endpoint: String, coordinates: String) -> URLRequest? {
         guard let url = URL(string:"\(baseURL)/\(endpoint)/\(APIKey)/\(coordinates)") else {
         

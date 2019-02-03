@@ -37,7 +37,8 @@ class ViewController: UIViewController {
         
         goButton.isEnabled = true
         workingView.isHidden = true
-        show(alert, sender: nil)
+        
+        alert.presentInOwnWindow(animated: true, completion: nil)
     }
 
     @IBAction func didPressGo(_ sender: Any) {
