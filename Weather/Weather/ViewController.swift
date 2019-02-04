@@ -13,16 +13,35 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var locationField: UITextField!
     @IBOutlet weak var goButton: UIButton!
+    @IBOutlet weak var currentLocationButton: UIButton!
     @IBOutlet weak var workingView: UIView!
+    
+    var locationDescription = ""
+    let locationManager = CLLocationManager()
+    
+    var working: Bool = false {
+        didSet {
+            if working {
+                goButton.isEnabled = false //Disable the buttons while we're working
+                currentLocationButton.isEnabled = false
+                //TODO: Animate in somehow
+                workingView.isHidden = false
+            } else {
+                currentLocationButton.isEnabled = true
+                goButton.isEnabled = true
+                workingView.isHidden = true
+            }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        locationManager.delegate = self
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        goButton.isEnabled = true
-        workingView.isHidden = true
+        working = false
     }
     
     override func didReceiveMemoryWarning() {
@@ -35,37 +54,46 @@ class ViewController: UIViewController {
         
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         
-        goButton.isEnabled = true
-        workingView.isHidden = true
+        working = false
         
         alert.presentInOwnWindow(animated: true, completion: nil)
     }
 
     @IBAction func didPressGo(_ sender: Any) {
-        goButton.isEnabled = false //Disable the button while we're working
-        //TODO: Animate in somehow
-        workingView.isHidden = false
+        working = true
         if let locationString = locationField.text, locationString != "" {
+            locationDescription = locationString
             getCoordinates(location: locationString) { (location) in
-                APIWrapper.sharedInstance.getForecast(for: location) { (data, error) in
-                    if let error = error {
-                        switch error {
-                        case .invalidCoordinates:
-                            self.showError(message: "Could not get coordinates for that location. Try entering a more exact address, city, or zip code.")
-                        case .jsonParseError:
-                            self.showError(message: "Error reading weather data. Apologies for the inconvenience.")
-                        case .serverError:
-                            self.showError(message: "Could not reach weather forecast server. Please try again later.")
-                        }
-                    } else if let weather = data {
-                        DispatchQueue.main.async {
-                            self.performSegue(withIdentifier: "ShowWeather", sender: weather)
-                        }
-                    }
-                }
+                self.getWeatherFor(location: location)
             }
         } else {
             showError(message: "Please enter a location")
+        }
+    }
+    
+    @IBAction func didTouchCurrentLocation(_ sender: Any) {
+        working = true
+        locationDescription = "your location"
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.requestLocation()
+    }
+    
+    func getWeatherFor(location: CLLocation) {
+        APIWrapper.sharedInstance.getForecast(for: location) { (data, error) in
+            if let error = error {
+                switch error {
+                case .invalidCoordinates:
+                    self.showError(message: "Could not get coordinates for that location. Try entering a more exact address, city, or zip code.")
+                case .jsonParseError:
+                    self.showError(message: "Error reading weather data. Apologies for the inconvenience.")
+                case .serverError:
+                    self.showError(message: "Could not reach weather forecast server. Please try again later.")
+                }
+            } else if let weather = data {
+                DispatchQueue.main.async {
+                    self.performSegue(withIdentifier: "ShowWeather", sender: weather)
+                }
+            }
         }
     }
     
@@ -87,10 +115,21 @@ class ViewController: UIViewController {
         if segue.identifier == "ShowWeather" {
             if let weatherController = segue.destination as? WeatherViewController, let weather = sender as? Weather {
                 weatherController.weather = weather
-                weatherController.location = locationField.text
+                weatherController.location = locationDescription
             }
         }
     }
     
 }
 
+extension ViewController: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let latestLocation = locations.last! //Method guarantees at least one location
+        getWeatherFor(location: latestLocation)
+        
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        showError(message: "Failed to get your location. Please try again later.")
+    }
+}

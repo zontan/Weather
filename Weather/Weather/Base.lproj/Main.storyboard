@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="G9H-hg-ISG">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="G9H-hg-ISG">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
-        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -48,7 +47,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IAL-ix-fHD">
-                                <rect key="frame" x="142" y="242" width="90" height="30"/>
+                                <rect key="frame" x="142.5" y="222" width="90" height="30"/>
                                 <color key="backgroundColor" red="0.25099297771548579" green="1" blue="0.11566936836964126" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="90" id="z9b-gW-ivh"/>
@@ -66,16 +65,16 @@
                                 </connections>
                             </button>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QfB-Oy-9yq">
-                                <rect key="frame" x="56" y="100" width="262.5" height="200"/>
+                                <rect key="frame" x="56.5" y="100" width="262.5" height="200"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Fetching Weather..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IyC-he-bKM">
-                                        <rect key="frame" x="57" y="90" width="148.5" height="21"/>
+                                        <rect key="frame" x="57" y="89.5" width="148.5" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="xjn-dZ-p9p">
-                                        <rect key="frame" x="121.5" y="128" width="20" height="20"/>
+                                        <rect key="frame" x="121" y="127.5" width="20" height="20"/>
                                     </activityIndicatorView>
                                 </subviews>
                                 <color key="backgroundColor" red="0.25099297770000001" green="1" blue="0.1156693684" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -91,6 +90,24 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u5g-eY-Hnj">
+                                <rect key="frame" x="87.5" y="298" width="200" height="30"/>
+                                <color key="backgroundColor" red="0.25099297770000001" green="1" blue="0.1156693684" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="dff-r9-Tbh"/>
+                                </constraints>
+                                <state key="normal" title="Use Current Location">
+                                    <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="didTouchCurrentLocation:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Qp4-hl-RM4"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.27439852518259866" green="0.76241767129513838" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -103,7 +120,9 @@
                             <constraint firstItem="QfB-Oy-9yq" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="0.3" id="P3R-Qt-0Zl"/>
                             <constraint firstItem="IAL-ix-fHD" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="Vo2-bd-mwT"/>
                             <constraint firstItem="2r7-de-HFd" firstAttribute="top" secondItem="9gl-F2-Gt8" secondAttribute="bottom" constant="25" id="a5A-ad-4cY"/>
-                            <constraint firstItem="IAL-ix-fHD" firstAttribute="top" secondItem="2r7-de-HFd" secondAttribute="bottom" constant="46" id="pme-qg-WOD"/>
+                            <constraint firstItem="u5g-eY-Hnj" firstAttribute="top" secondItem="IAL-ix-fHD" secondAttribute="bottom" constant="46" id="b1u-ie-VEP"/>
+                            <constraint firstItem="u5g-eY-Hnj" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="h6V-Jy-Uj6"/>
+                            <constraint firstItem="IAL-ix-fHD" firstAttribute="top" secondItem="2r7-de-HFd" secondAttribute="bottom" constant="26" id="pme-qg-WOD"/>
                             <constraint firstItem="9gl-F2-Gt8" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="utD-df-WDS"/>
                             <constraint firstItem="2r7-de-HFd" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="40" id="zdx-fw-hVA"/>
                         </constraints>
@@ -112,6 +131,7 @@
                     <navigationItem key="navigationItem" id="kgo-US-WRY"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
+                        <outlet property="currentLocationButton" destination="u5g-eY-Hnj" id="Zky-kQ-2LU"/>
                         <outlet property="goButton" destination="IAL-ix-fHD" id="C7k-IQ-Ar0"/>
                         <outlet property="locationField" destination="2r7-de-HFd" id="ApG-F7-Ucf"/>
                         <outlet property="workingView" destination="QfB-Oy-9yq" id="DUR-ls-Vk0"/>
@@ -143,19 +163,19 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Humidity" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rNz-7d-qfj">
-                                <rect key="frame" x="40" y="279" width="68.5" height="21"/>
+                                <rect key="frame" x="40" y="279.5" width="68.5" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Chance of Rain" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Edl-PS-IE9">
-                                <rect key="frame" x="40" y="317" width="116" height="21"/>
+                                <rect key="frame" x="40" y="317.5" width="116" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Unknown Weather Conditions" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l1C-Oa-om0">
-                                <rect key="frame" x="57.5" y="136" width="259.5" height="24"/>
+                                <rect key="frame" x="58" y="136" width="259.5" height="24"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -167,25 +187,25 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Unknown" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kpE-H3-D07">
-                                <rect key="frame" x="263" y="241" width="72" height="21"/>
+                                <rect key="frame" x="263" y="242" width="72" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Unknown" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tlb-nE-A6A">
-                                <rect key="frame" x="263" y="279" width="72" height="21"/>
+                                <rect key="frame" x="263" y="279.5" width="72" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Unknown" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Dn-PO-k2j">
-                                <rect key="frame" x="263" y="317.5" width="72" height="20.5"/>
+                                <rect key="frame" x="263" y="318" width="72" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" red="0.53470790327447371" green="1" blue="0.1814174075412065" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.16841275900918512" green="0.39416898507144082" blue="0.84815196700507611" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="Tlb-nE-A6A" firstAttribute="trailing" secondItem="kpE-H3-D07" secondAttribute="trailing" id="Enx-Dm-tvs"/>
                             <constraint firstItem="FIP-3G-vZg" firstAttribute="trailing" secondItem="zoy-db-v4k" secondAttribute="trailing" constant="40" id="F7w-qI-4VT"/>
